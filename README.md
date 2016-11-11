@@ -1,1 +1,1 @@
-A restful service to manage orders
+A spring restful service to manage orders
