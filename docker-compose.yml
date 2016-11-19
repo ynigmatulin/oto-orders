@@ -1,0 +1,12 @@
+version: '2'
+services:
+  spring-orders:
+    build: .
+    ports:
+      - 8080
+    links:
+     - mongo
+  mongo:
+    image: mongo
+    ports:
+      - 8888
