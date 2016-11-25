@@ -1,0 +1,11 @@
+version: '1.0'
+steps:
+  build-the-image:
+    type: build
+    description: Builds my service
+    image-name: antweiss/otoorders
+    tag: ${{CF_SHORT_REVISION}}
+  push-the-image:
+    type: push
+    candidate: ${{build-the-image}}
+    tag: ${{CF_SHORT_REVISION}}
