@@ -3,7 +3,7 @@ steps:
   build-the-image:
     type: build
     description: Builds my service
-    image-name: antweiss/otoorders
+    image_name: antweiss/otoorders
     tag: ${{CF_SHORT_REVISION}}
   push-the-image:
     type: push
