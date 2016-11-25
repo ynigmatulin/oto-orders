@@ -9,3 +9,7 @@ steps:
     type: push
     candidate: ${{build-the-image}}
     tag: ${{CF_SHORT_REVISION}}
+  push-with-branch-name:
+    type: push
+    candidate: ${{build-the-image}}
+    tag: ${{CF_BRANCH}}
