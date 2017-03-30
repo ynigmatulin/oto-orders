@@ -3,6 +3,7 @@ steps:
   build-jar:
     description: build-the-jar
     image: gradle
+    working_directory: ${{main_clone}}
     commands:
     - gradle build -x test
   build-the-image:
