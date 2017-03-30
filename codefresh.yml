@@ -1,9 +1,16 @@
 version: '1.0'
 steps:
+  build-jar:
+    description: build-the-jar
+    image: gradle
+    commands:
+    - gradle build -x test
   build-the-image:
     type: build
+    dockerfile: Dockerfile
     description: Builds my service
     image_name: antweiss/otoorders
+    working_directory: ${{main_clone}}
     tag: ${{CF_SHORT_REVISION}}
   push-the-image:
     type: push
