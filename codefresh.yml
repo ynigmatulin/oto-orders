@@ -5,6 +5,7 @@ steps:
     image: gradle
     working_directory: ${{main_clone}}
     commands:
+    - mkdir -p /codefresh/volume/.gradle
     - mkdir -p /codefresh/volume/oto-orders/.gradle
     - gradle build -x test
   build-the-image:
