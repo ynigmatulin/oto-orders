@@ -5,7 +5,8 @@ steps:
     working-directory: ${{initial-clone}}
     commands:
       - echo KUBECONFIG is $KUBECONFIG
-      - kubectl config --kubeconfig $KUBECONFIG
+      - mkdir -p ${HOME}/.kube
+      - cp $KUBECONFIG ${HOME}/.kube/
       - kubectl apply -f orders-dep.yml --validate=false
     environment:
       - KUBECONFIG=./kubeconfig/config
