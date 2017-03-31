@@ -21,3 +21,8 @@ steps:
     type: push
     candidate: ${{build-the-image}}
     tag: ${{CF_BRANCH}}
+  deploy:
+    image: "otomato/kubectl:alpine"
+    working-directory: ${{initial-clone}}
+    commands:
+      - kubectl apply -f orders-dep.yml --validate=false
