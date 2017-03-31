@@ -5,7 +5,7 @@ steps:
     image: alpine
     working_directory: ${{main_clone}}
     commands:
-    - gradlew build -x test
+    - ./gradlew build -x test
   build-the-image:
     type: build
     dockerfile: Dockerfile
