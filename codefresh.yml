@@ -2,12 +2,10 @@ version: '1.0'
 steps:
   build-jar:
     description: build-the-jar
-    image: gradle:jdk8-alpine
+    image: alpine
     working_directory: ${{main_clone}}
     commands:
-    - mkdir -p /codefresh/volume/.gradle
-    - mkdir -p /codefresh/volume/oto-orders/.gradle
-    - gradle build -x test
+    - gradlew build -x test
   build-the-image:
     type: build
     dockerfile: Dockerfile
