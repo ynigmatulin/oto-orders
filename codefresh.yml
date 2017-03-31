@@ -25,4 +25,7 @@ steps:
     image: "otomato/kubectl:alpine"
     working-directory: ${{initial-clone}}
     commands:
+      - ls -la
+      - export KUBECONFIG=./kubeconfig/config
+      - echo ${KUBECONFIG}
       - export KUBECONFIG=./kubeconfig/config && kubectl apply -f orders-dep.yml --validate=false
