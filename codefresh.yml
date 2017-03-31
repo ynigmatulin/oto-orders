@@ -2,7 +2,7 @@ version: '1.0'
 steps:
   build-jar:
     description: build-the-jar
-    image: java:jdk
+    image: "java:jdk"
     working_directory: ${{main_clone}}
     commands:
     - ./gradlew build -x test
