@@ -1,9 +1,17 @@
 version: '1.0'
 steps:
+  build-jar:
+    description: build-the-jar
+    image: "java:jdk"
+    working_directory: ${{main_clone}}
+    commands:
+    - ./gradlew build -x test
   build-the-image:
     type: build
+    dockerfile: Dockerfile
     description: Builds my service
     image_name: antweiss/otoorders
+    working_directory: ${{main_clone}}
     tag: ${{CF_SHORT_REVISION}}
   push-the-image:
     type: push
@@ -13,3 +21,11 @@ steps:
     type: push
     candidate: ${{build-the-image}}
     tag: ${{CF_BRANCH}}
+  deploy:
+    image: "otomato/kubectl:alpine"
+    working-directory: ${{initial-clone}}
+    commands:
+      - ls -la
+      - export KUBECONFIG=./kubeconfig/config
+      - echo ${KUBECONFIG}
+      - export KUBECONFIG=./kubeconfig/config && kubectl apply -f orders-dep.yml --validate=false
