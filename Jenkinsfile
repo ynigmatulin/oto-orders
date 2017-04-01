@@ -16,8 +16,11 @@ node ('slave1'){
     stage ('push'){
         image.push()
     }
-    stage ('deploy'){
-         sh 'kubectl apply -f orders-dep.yml --validate=false'
+    stage ('deploy-to-testing'){
+          sh "sed -i -- \'s/BUILD_NUMBER/${env.BUILD_NUMBER}/g\' orders-dep.yml"
+		sh "kubectl create namespace orders-testing-${env.BUILD_NUMBER}"
+        sh "kubectl apply -f orders-dep.yml --validate=false --naamespace=orders-testing-${env.BUILD_NUMBER}"
      }
+
 
 }
