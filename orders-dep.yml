@@ -26,6 +26,6 @@ spec:
     spec:
       containers:
       - name: otoorders
-        image: antweiss/otoorders:master
+        image: otomato/oto-orders:BUILD_NUMBER
         ports:
         - containerPort: 8080
