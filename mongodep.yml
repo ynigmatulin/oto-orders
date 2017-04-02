@@ -6,9 +6,11 @@ metadata:
     run: mongo
 spec:
   ports:
-    # the port that this service should serve on
-    - port: 27017
-      targetPort: 27017
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    run: mongo
   type: LoadBalancer
   loadBalancerSourceRanges:
   - 0.0.0.0/0
