@@ -6,7 +6,10 @@ node ('slave1'){
     }
     stage ('build'){
     def gr = tool 'gradle'
-    sh "${gr}/bin/gradle build -x test"
+    docker.image('mongo').withRun('-p 27017:27017') { c->
+//add correct properties
+        sh "${gr}/bin/gradle build"
+    }
    }
    def image = ''
    stage ('dockerize'){
