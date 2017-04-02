@@ -5,11 +5,13 @@ node ('slave1'){
        checkout scm
     }
     stage ('build'){
-    def gr = tool 'gradle'
-    docker.image('mongo').withRun('-p 27017:27017') { c->
-//add correct properties
-        sh "${gr}/bin/gradle build"
-    }
+    	def gr = tool 'gradle'
+	docker.image('mongo').withRun('-p 27017:27017') { c->
+		sh "cp src/main/resources/application-ci.properties src/main/resources/application.properties"
+		sh "${gr}/bin/gradle test"
+	    }
+       sh 'git checkout -- src/main/resources/application.properties'
+       sh "${gr}/bin/gradle build -x test" 
    }
    def image = ''
    stage ('dockerize'){
