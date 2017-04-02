@@ -34,7 +34,7 @@ node ('slave1'){
         echo "url is ${APP_URL}"
      }
     stage ('component-test'){
-       withEnv(["APP_URL=http://${APP_URL}:8080"]) {
+       withEnv(["APP_URL=${APP_URL}:8080"]) {
 	sh "tests/ct/run.sh"
        }
     } 
