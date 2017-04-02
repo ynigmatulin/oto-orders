@@ -24,7 +24,7 @@ node ('slave1'){
         //get app url
         def APP_URL = "<pending>"
         while ( APP_URL == "<pending>"){
-            APP_URL = sh "kubectl get svc otoorders --no-headers=true  --namespace=orders-testing-${env.BUILD_NUMBER} |  awk '{print \$3}'"
+            APP_URL = sh returnStdout: true, script: "kubectl get svc otoorders --no-headers=true  --namespace=orders-testing-${env.BUILD_NUMBER} |  awk '{print \$3}'"
         }
         echo APP_URL
      }
