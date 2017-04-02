@@ -24,7 +24,7 @@ node ('slave1'){
         sh "kubectl apply -f orders-dep.yml --validate=false --namespace=orders-testing-${env.BUILD_NUMBER}"
         //get app url
         APP_URL = "<pending>"
-        sleep 10
+        sleep 120
         while ( APP_URL == "<pending>"){
             APP_URL = sh returnStdout: true, script: "kubectl get svc otoorders --no-headers=true  --namespace=orders-testing-${env.BUILD_NUMBER} |  awk '{print \$3}'"
              APP_URL = APP_URL.trim()
