@@ -1,6 +1,12 @@
 
 node ('slave1'){
+//define app url for component tests
     def APP_URL=""
+//clean out build dir
+    dir ('build')
+    {
+        deleteDir()
+    }
     stage ('git'){
        checkout scm
     }
@@ -8,6 +14,7 @@ node ('slave1'){
     	//this runs unit test (assumes there's a mongo running at 'mongo'
 	def gr = tool 'gradle'
 	sh "${gr}/bin/gradle build"
+        junit 'build/test-results/test/*.xml'
    }
    def image = ''
    stage ('dockerize'){
