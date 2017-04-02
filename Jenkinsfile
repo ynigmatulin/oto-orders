@@ -1,5 +1,6 @@
 
 node ('slave1'){
+    def APP_URL=""
     stage ('git'){
        checkout scm
     }
@@ -22,14 +23,18 @@ node ('slave1'){
         sh "kubectl apply -f mongodep.yml --validate=false --namespace=orders-testing-${env.BUILD_NUMBER}"
         sh "kubectl apply -f orders-dep.yml --validate=false --namespace=orders-testing-${env.BUILD_NUMBER}"
         //get app url
-        def APP_URL = "<pending>"
+        APP_URL = "<pending>"
+        sleep 10
         while ( APP_URL == "<pending>"){
             APP_URL = sh returnStdout: true, script: "kubectl get svc otoorders --no-headers=true  --namespace=orders-testing-${env.BUILD_NUMBER} |  awk '{print \$3}'"
+             APP_URL = APP_URL.trim()
+            
         }
-        echo APP_URL
+       
+        echo "url is ${APP_URL}"
      }
     stage ('component-test'){
-       withEnv(["APP_URL=${APP_URL}"]) {
+       withEnv(["APP_URL=http://${APP_URL}:8080"]) {
 	sh "tests/ct/run.sh"
        }
     } 
