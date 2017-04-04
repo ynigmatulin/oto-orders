@@ -51,7 +51,7 @@ node ('slave1'){
     stage ('clean-up'){
 	sh "kubectl delete ns ${nsName}"
     }
-    stage('deply-to-staging'){
+    stage('deploy-to-staging'){
         sh "kubectl apply -f ${svcName}-dep.yml -n staging"  
     }
      stage ('integration-test'){
@@ -65,5 +65,8 @@ node ('slave1'){
 	    sh './integration-tests/run.sh'
 	  }  
 	} 
+    }
+    stage('deploy-to-production'){
+        sh "kubectl apply -f ${svcName}-dep.yml -n production"  
     }
 }
