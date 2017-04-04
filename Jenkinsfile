@@ -56,5 +56,14 @@ node ('slave1'){
     }
     stage ('integration-test'){
         echo "Not implemented"
+	def STAGING_FRONT_IP = sh returnStdout: true, script: "kubectl get svc front --no-headers=true  -n staging |  awk '{print \$3}'"
+	echo "Staging frontend is at ${STAGING_FRONT_IP}"
+	def STAGING_FRONT_URL = "http://${STAGING_FRONT_IP}":3000"
+	dir('it'){
+	  git 'https://github.com/antweiss/cicd-workshop.git'
+	  withEnv(["STAGING_FRONT_URL"=${STAGING_FRONT_URL}]){
+	    sh './integration-tests/run.sh'
+	  }  
+	} 
     }
 }
