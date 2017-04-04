@@ -31,7 +31,7 @@ node ('slave1'){
           sh "sed -i -- \'s/BUILD_NUMBER/${env.BUILD_NUMBER}/g\' ${svcName}-dep.yml"
 		sh "kubectl create namespace ${nsName}"
         sh "kubectl apply -f mongodep.yml --validate=false -n ${nsName}"
-        sh "kubectl apply -f orders-dep.yml --validate=false -n ${nsName}"
+        sh "kubectl apply -f ${svcName}-dep.yml --validate=false -n ${nsName}"
         //get app url
         APP_URL = "<pending>"
         sleep 120
@@ -51,6 +51,10 @@ node ('slave1'){
     stage ('clean-up'){
 	sh "kubectl delete ns ${nsName}"
     }
-
-
+    stage('deply-to-staging'){
+        sh "kubectl replace -f ${svcName}-dep.yml -n staging"  
+    }
+    stage ('integration-test'){
+        echo "Not implemented"
+    }
 }
