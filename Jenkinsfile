@@ -54,14 +54,14 @@ node ('slave1'){
     stage('deply-to-staging'){
         sh "kubectl apply -f ${svcName}-dep.yml -n staging"  
     }
-    stage ('integration-test'){
-        echo "Not implemented"
+     stage ('integration-test'){
 	def STAGING_FRONT_IP = sh returnStdout: true, script: "kubectl get svc front --no-headers=true  -n staging |  awk '{print \$3}'"
 	echo "Staging frontend is at ${STAGING_FRONT_IP}"
-	def STAGING_FRONT_URL = "http://${STAGING_FRONT_IP}:3000"
+	def STAGING_FRONT_URL = "http://" + STAGING_FRONT_IP.trim() + ":3000"
 	dir('it'){
 	  git 'https://github.com/antweiss/cicd-workshop.git'
 	  withEnv(["STAGING_FRONT_URL=${STAGING_FRONT_URL}"]){
+	    sh 'ls'
 	    sh './integration-tests/run.sh'
 	  }  
 	} 
