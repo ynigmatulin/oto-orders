@@ -61,7 +61,7 @@ node ('slave1'){
 	def STAGING_FRONT_URL = "http://${STAGING_FRONT_IP}:3000"
 	dir('it'){
 	  git 'https://github.com/antweiss/cicd-workshop.git'
-	  withEnv(["STAGING_FRONT_URL"=${STAGING_FRONT_URL}]){
+	  withEnv(["STAGING_FRONT_URL=${STAGING_FRONT_URL}"]){
 	    sh './integration-tests/run.sh'
 	  }  
 	} 
