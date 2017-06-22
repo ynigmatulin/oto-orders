@@ -23,7 +23,6 @@ node ('slave1'){
        image = docker.build "otomato/oto-${svcName}:${env.BUILD_NUMBER}"
    }
     
-    
     stage ('push'){
         image.push()
     }
