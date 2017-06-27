@@ -21,11 +21,11 @@ steps:
     type: push
     candidate: ${{build-the-image}}
     tag: ${{CF_BRANCH}}
-  deploy:
-    image: "otomato/kubectl:alpine"
-    working-directory: ${{initial-clone}}
-    commands:
-      - ls -la
-      - export KUBECONFIG=./kubeconfig/config
-      - echo ${KUBECONFIG}
-      - export KUBECONFIG=./kubeconfig/config && kubectl apply -f orders-dep.yml --validate=false
+#  deploy:
+#    image: "otomato/kubectl:alpine"
+#    working-directory: ${{initial-clone}}
+#    commands:
+#      - ls -la
+#      - export KUBECONFIG=./kubeconfig/config
+#      - echo ${KUBECONFIG}
+#      - export KUBECONFIG=./kubeconfig/config && kubectl apply -f orders-dep.yml --validate=false
